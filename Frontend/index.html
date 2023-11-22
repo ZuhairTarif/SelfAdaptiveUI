@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUI</title>
+    <link rel="favicon" href="./icon.jpg">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-probability@3.0.0/dist/tfjs-probability.min.js"></script>
+</head>
+<body>
+    <p id="text">This is some text.</p>
+    <img src="icon.jpg" alt="Icon" id="icon">
+    <p>Rate your experience:</p>
+    <button id="goodButton" onclick="rateExperience('good')">Good</button>
+    <button id="badButton" onclick="rateExperience('bad')">Bad</button>
+    <button id="submitButton" onclick="submitRating()">Submit Rating</button>
+    <button id="closeButton">Close</button>
+
+</body>
+</html>
