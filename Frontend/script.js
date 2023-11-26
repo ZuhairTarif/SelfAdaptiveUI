@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
+    var clickCount = 0;
     var misclickCount = 0;
+    var totalClickCycles = 0;
     var thresholdValue = 4;
     var userRating = '';
     var misclickCycles = [];
 
     document.addEventListener('click', function (event) {
+        clickCount++;
+
         if (
             event.target !== document.getElementById('text') &&
             event.target !== document.getElementById('icon') &&
@@ -13,9 +17,15 @@ document.addEventListener('DOMContentLoaded', function () {
             event.target.id !== 'submitButton'
         ) {
             misclickCount++;
-            if (misclickCount >= thresholdValue) {
+        }
+
+        if (clickCount % thresholdValue === 0) {
+            totalClickCycles++;
+            if (misclickCount > 0) {
                 misclickCycles.push(1); 
-                misclickCount = 0; 
+                misclickCount = 0;
+            } else {
+                misclickCycles.push(0);
             }
         }
     });
@@ -29,14 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function generateMisclickReport() {
-        if (misclickCount > 0 && misclickCount < thresholdValue) {
-            misclickCycles.push(0); 
-        }
-        
-        var totalCycles = misclickCycles.length;
         var misclickCycleCount = misclickCycles.reduce((sum, current) => sum + current, 0);
-        var reportText = 'Readings: '+ (totalCycles * thresholdValue) +
-                         '\nMisclick Cycles: '+ misclickCycleCount +
+        var reportText = 'Total Click Cycles: ' + totalClickCycles +
+                         '\nMisclick Cycles: ' + misclickCycleCount +
                          '\nUser Rating: ' + userRating;
         
         var blob = new Blob([reportText], { type: 'text/plain' });
