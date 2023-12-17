@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="./style.css">
     <script src="./script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.0.0/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-probability@3.0.0/dist/tfjs-probability.min.js"></script>
+    
 </head>
 <body>
-    <p id="text">This is some text.</p>
-    <img src="icon.jpg" alt="Icon" id="icon">
+    <p id="text" class="clickable">This is some text.</p>
+    <img src="icon.jpg" alt="Icon" class="clickable" id="icon">
     <p>Rate your experience:</p>
-    <button id="goodButton" onclick="rateExperience('good')">Good</button>
-    <button id="badButton" onclick="rateExperience('bad')">Bad</button>
-    <button id="submitButton" onclick="submitRating()">Submit Rating</button>
-    <button id="closeButton">Close</button>
+    <button id="goodButton" class="clickable" onclick="rateExperience('1')">Good</button>
+    <button id="badButton" class="clickable" onclick="rateExperience('0')">Bad</button>
+    <button id="submitButton" class="clickable" onclick="submitRating()">Submit Rating</button>
+    <button id="closeButton" class="clickable">Close</button>
 
 </body>
 </html>
