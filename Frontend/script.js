@@ -1,48 +1,59 @@
+var badRatingCount= 0;
+var totalRatingCount = 0; 
+
+function rateExperience(rating) {
+    if (rating === '0') {
+        badRatingCount++;
+    } 
+}
+function submitRating() {
+    totalRatingCount++;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-    var misclickCount = 0;
+    var misClickCount = 0;
     var thresholdValue = 3;
-    var userRating = '';
-    var misclickCycles = 0;
+    var misClickCycle = 0;
     var totalClick = 0;
+    
+
+    // var storedData = localStorage.getItem('userData');
+    // if (storedData) {
+    //     var parsedData = JSON.parse(storedData);
+    //     totalClickCycle = parsedData.totalClickCycle;
+    //     misclickCycles = parsedData.misClickCycles;
+    //     totalRating = parsedData.totalRating;
+    //     badRating = parsedData.badRating;
+    // }
 
     document.addEventListener('click', function (event) {
         totalClick++;
         if (!event.target.classList.contains('clickable') ) {
-            misclickCount++;
-            if (misclickCount >= thresholdValue) {
-                misclickCycles++;   
-                misclickCount = 0;              
+            misClickCount++;
+            if (misClickCount >= thresholdValue) {
+                misClickCycle++;   
+                misClickCount = 0;              
             }
         }
     });
-
-    function rateExperience(rating) {
-        userRating = rating;
-    }
 
     document.getElementById('closeButton').addEventListener('click', function() {
         generateMisclickReport();
     });
 
-    function generateMisclickReport() {      
-        var reportText = 'Total click: '+ totalClick +
-                         '\nMisclick Cycles: '+ misclickCycles +
-                         '\nUser Rating: ' + userRating;
-        
-        var blob = new Blob([reportText], { type: 'text/plain' });
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'misclick_report.txt';
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+    function totalClickCycleCount() {
+        return Math.floor(totalClick/3);
     }
 
-    document.getElementById('goodButton').addEventListener('click', function() {
-        rateExperience('1');
-    });
-    document.getElementById('badButton').addEventListener('click', function() {
-        rateExperience('0');
-    });
+    function generateMisclickReport() {      
+        var dataToSave = {
+            totalClickCycle: totalClickCycleCount(),
+            misClickCycles: misClickCycle,
+            totalRating: totalRatingCount,
+            badRating: badRatingCount
+        };
+
+        localStorage.setItem('userData', JSON.stringify(dataToSave));
+        alert('Data saved in local storage.');
+    }
 });
