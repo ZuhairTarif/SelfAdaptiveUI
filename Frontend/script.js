@@ -15,16 +15,20 @@ document.addEventListener('DOMContentLoaded', function () {
     var thresholdValue = 3;
     var misClickCycle = 0;
     var totalClick = 0;
-    
 
-    // var storedData = localStorage.getItem('userData');
-    // if (storedData) {
-    //     var parsedData = JSON.parse(storedData);
-    //     totalClickCycle = parsedData.totalClickCycle;
-    //     misclickCycles = parsedData.misClickCycles;
-    //     totalRating = parsedData.totalRating;
-    //     badRating = parsedData.badRating;
-    // }
+    var oldTotalClickCycle = 0;
+    var oldMisclickCycles = 0;
+    var oldTotalRating = 0;
+    var oldBadRating = 0;
+
+    var storedData = localStorage.getItem('userData');
+    if (storedData) {
+        var parsedData = JSON.parse(storedData);
+        oldTotalClickCycle = parsedData.totalClickCycle;
+        oldMisclickCycles = parsedData.misClickCycles;
+        oldTotalRating = parsedData.totalRating;
+        oldBadRating = parsedData.badRating;
+    }
 
     document.addEventListener('click', function (event) {
         totalClick++;
@@ -47,10 +51,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function generateMisclickReport() {      
         var dataToSave = {
-            totalClickCycle: totalClickCycleCount(),
-            misClickCycles: misClickCycle,
-            totalRating: totalRatingCount,
-            badRating: badRatingCount
+            totalClickCycle: (totalClickCycleCount()+oldTotalClickCycle),
+            misClickCycles: (misClickCycle+oldMisclickCycles),
+            totalRating: (totalRatingCount+oldTotalRating),
+            badRating: (badRatingCount+oldBadRating)
         };
 
         localStorage.setItem('userData', JSON.stringify(dataToSave));
