@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
         //         //misClickCycle++;   
         //     }
         // }  
-        //clickHistory.length = 0;
         generateMisclickReport();
     });
 
