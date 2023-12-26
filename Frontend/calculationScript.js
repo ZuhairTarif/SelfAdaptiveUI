@@ -1,17 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // function generateMisclickReport() {
-
-  //     var dataToSave = {
-  //         prIncreaseSize: prIncreaseSize
-  //     };
-
-  //     localStorage.setItem('userData', JSON.stringify(dataToSave));
-  //     //alert('Data saved in local storage.');
-  // }
-
   document.getElementById("closeButton").addEventListener("click", function () {
-    //generateMisclickReport();
-
     var prMisclickTrue = 0;
     var prMisclickFalse = 0;
     var prBadRatingTrue = 0;
@@ -25,6 +13,15 @@ document.addEventListener("DOMContentLoaded", function () {
     var misclickCycles = 0;
     var totalRating = 0;
     var badRating = 0;
+
+    function generateMisclickReport() {
+      var dataToSave = {
+        increaseSize : prIncreaseSize,
+      };
+
+      localStorage.setItem("increaseData", JSON.stringify(dataToSave));
+      //alert('Data saved in local storage.');
+    }
 
     var storedData = localStorage.getItem("userData");
     if (storedData) {
@@ -44,15 +41,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     prBadRatingFalseGivenTextTrue =
       prMisclickTrueBadRatingFalse * prMisclickTrue * prBadRatingFalse;
-    console.log("prBadRatingFalseGivenTextTrue" + prBadRatingFalseGivenTextTrue);
-    
+    console.log(
+      "prBadRatingFalseGivenTextTrue: " + prBadRatingFalseGivenTextTrue
+    );
+
     prTextTrue =
       prMisclickTrue * prBadRatingTrue +
       prMisclickTrueBadRatingFalse * prMisclickTrue * prBadRatingFalse +
       prMisclickFalseBadRatingTrue * prMisclickFalse * prBadRatingTrue;
-    console.log("prTextTrue" + prTextTrue);
+    console.log("prTextTrue: " + prTextTrue);
 
     prIncreaseSize = prBadRatingFalseGivenTextTrue / prTextTrue;
     console.log("Increase size: " + prIncreaseSize);
+    
+    generateMisclickReport();
+    
+
   });
 });
