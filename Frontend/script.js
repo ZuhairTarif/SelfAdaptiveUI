@@ -12,9 +12,11 @@ function submitRating() {
 
 document.addEventListener('DOMContentLoaded', function () {
     var misClickCount = 0;
-    var thresholdValue = 3;
+    var thresholdValue = 4;
     var misClickCycle = 0;
     var totalClick = 0;
+    var totalClickCycle =0;
+    var clickHistory = []; 
 
     var oldTotalClickCycle = 0;
     var oldMisclickCycles = 0;
@@ -30,26 +32,58 @@ document.addEventListener('DOMContentLoaded', function () {
         oldBadRating = parsedData.badRating;
     }
 
+    // document.addEventListener('click', function (event) {
+    //     totalClick++;
+    //     if (!event.target.classList.contains('clickable') ) {
+    //         misClickCount++;
+    //         if (misClickCount >= thresholdValue) {
+    //             misClickCycle++;   
+    //             misClickCount = 0;              
+    //         }
+    //     }
+    // });
+    
     document.addEventListener('click', function (event) {
         totalClick++;
         if (!event.target.classList.contains('clickable') ) {
-            misClickCount++;
-            if (misClickCount >= thresholdValue) {
+            clickHistory.push(0); // 0 for a mis-click   
+            console.log("mis-click");
+		    console.log(clickHistory); 
+        }else {
+            clickHistory.push(1); // 1 for a valid click
+            console.log("valid click");
+            console.log(clickHistory); 
+        }
+        
+        if (clickHistory.length >= thresholdValue) {
+            totalClickCycle++; 
+
+            if (clickHistory.every(val => val === 0)) {
                 misClickCycle++;   
-                misClickCount = 0;              
             }
+	        clickHistory.length = 0;
         }
     });
 
+ 
     document.getElementById('closeButton').addEventListener('click', function() {
+        // if (clickHistory.length < thresholdValue) {
+        //     totalClickCycle++; 
+
+        //     if (clickHistory.every(val => val === 0)) {
+        //         //misClickCycle++;   
+        //     }
+        // }  
         generateMisclickReport();
     });
 
     function totalClickCycleCount() {
-        return Math.floor(totalClick/3);
+        //return Math.floor(totalClick/thresholdValue);
+        return totalClickCycle;
     }
 
-    function generateMisclickReport() {      
+    function generateMisclickReport() {    
+        
         var dataToSave = {
             totalClickCycle: (totalClickCycleCount()+oldTotalClickCycle),
             misClickCycles: (misClickCycle+oldMisclickCycles),
@@ -58,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         localStorage.setItem('userData', JSON.stringify(dataToSave));
-        alert('Data saved in local storage.');
+        //alert('Data saved in local storage.');
     }
 });
+
+
+
