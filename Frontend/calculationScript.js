@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
       //alert('Data saved in local storage.');
     }
 
+
     var storedData = localStorage.getItem("userData");
     if (storedData) {
       var parsedData = JSON.parse(storedData);

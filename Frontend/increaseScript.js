@@ -45,9 +45,10 @@ function checkAndIncreaseSize() {
     localStorage.setItem('previousIncreaseSize', currentIncreaseSize.toString());
 }
 
-document.addEventListener('DOMContentLoaded', checkAndIncreaseSize);
-
 document.addEventListener('DOMContentLoaded', function() {
+    applyStoredFontSize();
+    checkAndIncreaseSize();
+
     var closeButton = document.getElementById('closeButton');
     if (closeButton) {
         closeButton.addEventListener('click', checkAndIncreaseSize);
