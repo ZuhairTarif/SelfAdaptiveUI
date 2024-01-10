@@ -6,7 +6,7 @@ function increaseSizeElements() {
     var elementsToResize = document.querySelectorAll('.clickable');
     elementsToResize.forEach(function(element) {
         var currentSize = getCurrentSize(element);
-        var newSize = currentSize * 1.1; 
+        var newSize = currentSize * 1.3; 
         element.style.fontSize = newSize + 'px';
         localStorage.setItem('appliedFontSize', newSize.toString());
     });
